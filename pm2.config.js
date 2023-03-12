@@ -19,7 +19,7 @@ module.exports = {
     {
       name: "app-style",
       script: sourceFile,
-      instances: numCpu,
+      instances: numCpu - 1,
       exec_mode: "cluster",
       watch: true,
       max_memory_restart: '1024M',

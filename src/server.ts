@@ -5,8 +5,10 @@ import { ContextFunction, PluginDefinition } from 'apollo-server-core';
 import { contabilResolver } from "./graphql/contabil/resolver";
 import contabilTypeDefs from "./graphql/contabil/typeDefs";
 import cluster from 'cluster'
-// import resolver from './graphql/resolvers'
-// import typedef from './graphql/typeDefs'
+import os from 'os'
+
+
+const numCPUs = os.cpus().length
 
 const plugins: PluginDefinition[] = [];
 const resolvers = [contabilResolver]
@@ -14,10 +16,8 @@ const typeDefs =  [contabilTypeDefs]
 
 const startServer = async () => {
   try {
-      if (cluster.isMaster) {
-        const numWorkers = require('os').cpus().length;
-    
-        for (let i = 0; i < numWorkers; i++) {
+      if (cluster.isMaster) {    
+        for (let i = 0; i < numCPUs; i++) {
           cluster.fork();
         }
     
@@ -27,8 +27,7 @@ const startServer = async () => {
           cluster.fork();
         });
       } else {
-        // Configuração do servidor Apollo aqui
-        const server = new ApolloServer({
+           const server = new ApolloServer({
           typeDefs,
           resolvers,
           logger,

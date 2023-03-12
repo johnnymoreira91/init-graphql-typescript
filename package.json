@@ -6,14 +6,18 @@
   "scripts": {
     "dev": "tsx src/server.ts",
     "build": "tsup src",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "pm2": "pm2 start pm2.config.js",
+    "prod": "NODE_ENV=prod pm2 start pm2.config.js",
+    "stop": "pm2 stop all && pm2 delete all"
   },
   "dependencies": {
     "apollo-server": "^3.12.0",
     "apollo-server-core": "^3.12.0",
     "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
-    "graphql-tools": "7.0.5"
+    "graphql-tools": "7.0.5",
+    "pm2": "^5.2.2"
   },
   "devDependencies": {
     "@types/node": "^18.15.0",
